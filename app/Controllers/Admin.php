@@ -8,7 +8,7 @@ class Admin extends BaseController
     {
         $data = [
             "karyawan" => [
-                ["nip" => "123456789", "nama" => "Faradilla", "kjk" => 5, "ckp" => 98, "kipapp" => 90],
+                ["nip" => "123456789", "nama" => "Dary", "kjk" => 5, "ckp" => 98, "kipapp" => 90],
                 ["nip" => "123456789", "nama" => "Faradilla Anastasya", "kjk" => 5, "ckp" => 98, "kipapp" => 90],
                 ["nip" => "123456789", "nama" => "Faradilla Anastasya", "kjk" => 5, "ckp" => 98, "kipapp" => 90],
                 ["nip" => "123456789", "nama" => "Faradilla Anastasya", "kjk" => 5, "ckp" => 98, "kipapp" => 90],
