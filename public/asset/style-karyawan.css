@@ -16,7 +16,14 @@ body {
   justify-content: center;
   padding-top: 50px;
   padding-bottom: 50px;
-  background-color: #89cff0;
+  background-image: linear-gradient(
+    to top,
+    #b163f2,
+    #834cba,
+    #5a3683,
+    #352050,
+    #160822
+  );
   /* background-color: linear-gradient(to right, #3bb3eb, #89cff0); */
 }
 
@@ -78,7 +85,7 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.25 ease;
-  background-color: #3bb3eb;
+  background-color: #5a3683;
   margin: 10px;
 }
 

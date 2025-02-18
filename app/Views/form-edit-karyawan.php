@@ -22,21 +22,21 @@
         <form action="#" class="form">
             <div class="input-box">
                 <label>NIP</label>
-                <input type="text" placeholder="Masukkan NIP" required />
+                <input type="text" placeholder="Masukkan NIP" value="<?php echo $nip ?>" required />
             </div>
             <div class="input-box">
                 <label>Nama</label>
-                <input type="text" placeholder="Masukkan Nama" required />
+                <input type="text" placeholder="Masukkan Nama" value="<?php echo $nama ?>" required />
             </div>
-            <div class="input-box">
+            <div class=" input-box">
                 <label>Username</label>
-                <input type="text" placeholder="Masukkan Username" required />
+                <input type="text" placeholder="Masukkan Username" value="<?php echo $username ?>" required />
             </div>
-            <div class="input-box">
-                <label>Password</label>
-                <input type="password" placeholder="Masukkan Password" required />
+            <div class=" input-box">
+                <label>Tim</label>
+                <input type="text" placeholder="Masukkan Tim" value="<?php echo $tim ?>" required />
             </div>
-            <div class="tombol">
+            <div class=" tombol">
                 <button>Edit</button>
                 <button>Back</button>
             </div>
