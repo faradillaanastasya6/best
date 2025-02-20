@@ -72,6 +72,11 @@
       <h1>Variabel</h1>
     </div>
     <div class="table">
+      <a href="#">
+        <button class="tambah-data">
+          <i data-feather="user-plus"></i> Tambah Data
+        </button>
+      </a>
       <table id="tabel-variabel" class="display">
         <thead>
           <tr>
@@ -117,6 +122,11 @@
       <h1>Pegawai</h1>
     </div>
     <div class="table">
+      <a href="#tambah-pegawai">
+        <button class="tambah-data">
+          <i data-feather="user-plus"></i> Tambah Data
+        </button>
+      </a>
       <table id="tabel-pegawai" class="display">
         <thead>
           <tr>

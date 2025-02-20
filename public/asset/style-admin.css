@@ -18,14 +18,15 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
-  background-image: linear-gradient(
+  background-color: #bdb2ff;
+  /* background-image: linear-gradient(
     to right,
     #b163f2,
     #834cba,
     #5a3683,
     #352050,
     #160822
-  );
+  ); */
 }
 
 /*navbar*/
@@ -182,6 +183,23 @@ body {
   padding: 0.8rem;
 }
 
+.variabel .table .tambah-data {
+  display: flex;
+  background-color: #5a3683;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 16px;
+  margin-right: 0.5rem;
+  border-radius: 0.8rem;
+  border: none;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.variabel .table .tambah-data svg.feather {
+  padding-right: 0.3rem;
+}
+
 .variabel .table {
   padding: 1rem;
   margin: 1rem;
@@ -263,6 +281,23 @@ tr {
   overflow: auto;
   background-color: #fff9;
   border-radius: 1rem;
+}
+
+.pegawai .table .tambah-data {
+  display: flex;
+  background-color: #5a3683;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 16px;
+  margin-right: 0.5rem;
+  border-radius: 0.8rem;
+  border: none;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.pegawai .table .tambah-data svg.feather {
+  padding-right: 0.3rem;
 }
 
 .pegawai .table table {
