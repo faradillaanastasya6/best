@@ -97,7 +97,7 @@
               <td><?php echo $baris['kipapp'] ?></td>
               <td><?php echo $baris['kjk'] ?></td>
               <td>
-                <a href="/karyawan/tambah">
+                <a href="/pegawai/tambah">
                   <button class="tombol-sukses">
                     <i data-feather="edit"></i> Edit
                   </button>
@@ -122,7 +122,7 @@
       <h1>Pegawai</h1>
     </div>
     <div class="table">
-      <a href="#tambah-pegawai">
+      <a href="/pegawai/tambah">
         <button class="tambah-data">
           <i data-feather="user-plus"></i> Tambah Data
         </button>
@@ -145,12 +145,12 @@
               <td><?php echo $baris['tim'] ?></td>
               <td><?php echo $baris['username'] ?></td>
               <td>
-                <a href="/karyawan/tambah">
+                <a href=<?php echo '/pegawai/edit/' . $baris['nip'] ?>>
                   <button class="tombol-sukses">
                     <i data-feather="edit"></i> Edit
                   </button>
                 </a>
-                <a href="#">
+                <a href="<?php echo '/pegawai/delete/' . $baris['nip'] ?>">
                   <button class="tombol-sukses">
                     <i data-feather="trash"></i> Delete
                   </button>
