@@ -42,6 +42,6 @@ class Pegawai extends BaseController
     {
         // $pegawaiModel = new PegawaiModel();
         // $data 
-        caranya sama seperti tambah tapi insert ganti save
+        //caranya sama seperti tambah tapi insert ganti save
     }
 }
