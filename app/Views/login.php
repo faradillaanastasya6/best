@@ -22,14 +22,14 @@
 
 <body>
     <div class="login">
-        <form action="">
+        <form action="/login/auth" method="post">
             <h1>Login</h1>
             <div class="input">
-                <input type="text" placeholder="Username" required>
+                <input name="username" type="text" placeholder="Username" required>
                 <!-- <i data-feather="user"></i> -->
             </div>
             <div class="input">
-                <input type="password" placeholder="Password" required>
+                <input name="password" type="password" placeholder="Password" required>
                 <!-- <i data-feather="lock"></i> -->
             </div>
             <div class="remember-forgot">

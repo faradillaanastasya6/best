@@ -1,3 +1,12 @@
+<?php
+$status = $status ?? 'berlangsung';
+$hasil = $hasil ?? [];
+$voters = $voters ?? [];
+$tahun = $tahun ?? '';
+$bulan = $bulan ?? '';
+$event = $event ?? '';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -132,9 +141,60 @@
   <!-- Vote Section End -->
 
   <!-- Rekap Section Start-->
-  <section id="rekap-section" style="display: none;">
-    <h2>Halaman Rekap</h2>
-    <p>Data rekap akan tampil di sini.</p>
+  <section id="rekap-section" style="display:none;">
+    <div class="rekap-section">
+      <h2>Rekap Voting Pegawai Teladan</h2>
+      <p>Status Voting:
+        <?php if ($status === 'selesai'): ?>
+          <span style="color:green; font-weight:bold;">Sudah Selesai</span>
+        <?php else: ?>
+          <span style="color:orange; font-weight:bold;">Masih Berlangsung</span>
+        <?php endif; ?>
+      </p>
+
+      <?php if ($status === 'selesai'): ?>
+        <h3>Hasil Voting</h3>
+        <table border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Nama Kandidat</th>
+              <th>Jabatan</th>
+              <th>Total Nilai</th>
+              <th>Rata-rata</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($hasil as $row): ?>
+              <tr>
+                <td><?= $row['nama'] ?></td>
+                <td><?= $row['jabatan'] ?></td>
+                <td><?= array_sum($row['nilai']) ?></td>
+                <td><?= round(array_sum($row['nilai']) / count($row['nilai']), 2) ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+
+      <?php else: ?>
+        <h3>Daftar Voter yang Sudah Melakukan Voting</h3>
+        <table border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Nama Voter</th>
+              <th>NIP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($voters as $v): ?>
+              <tr>
+                <td><?= $v['nama'] ?></td>
+                <td><?= $v['nip'] ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
+    </div>
   </section>
   <!-- Rekap Section End-->
 
@@ -381,6 +441,30 @@
 
       // Tampilkan nilai di console (atau kirim ke server)
       console.log("Votes:", allVotes);
+
+      // Kirim data ke server
+      fetch("<?= base_url('voter/simpan') ?>", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(allVotes)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("Server response:", data);
+          alert("Voting berhasil disimpan!");
+
+          // Reset voting setelah berhasil
+          kandidatData.forEach(kandidat => kandidat.nilai = Array(21).fill(0));
+
+          document.getElementById("terima-kasih").style.display = "block";
+          document.getElementById("vote-section").style.display = "none";
+        })
+        .catch(error => {
+          console.error("Gagal mengirim voting:", error);
+          alert("Terjadi kesalahan saat menyimpan voting.");
+        });
 
       // Tampilkan pesan terima kasih
       alert("Terima kasih, voting Anda sudah tercatat!");
