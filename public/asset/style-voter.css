@@ -5,7 +5,7 @@ body {
 }
 
 .header {
-  background-color: #87cefa;
+  background-color: #958dc3;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -158,7 +158,7 @@ body {
 .carousel-slide h3 {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #004c8c;
+  color: #b163f2;
 }
 
 .carousel-slide p {
@@ -170,7 +170,7 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: #cfe9ff;
+  background: #bdb2ff;
   border: none;
   border-radius: 50%;
   font-size: 20px;
@@ -191,7 +191,7 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #87cefa;
+  background-color: #bdb2ff;
   display: flex;
   justify-content: space-around;
   padding: 8px 0;
@@ -210,6 +210,106 @@ body {
   font-size: 20px;
   display: block;
   margin-bottom: 2px;
+}
+
+/* slider */
+/* slider section */
+.slider {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.slider-container {
+  height: 750px;
+}
+
+.slider-container .slider-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.slider-image {
+  height: 750px; /* atur tinggi tetap */
+  overflow: hidden;
+  padding-top: 3rem;
+}
+
+.slider-container .slider-item::before {
+  inset: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: linear-gradient(
+    to top,
+    black,
+    rgba(0, 0, 0, 0.592),
+    transparent
+  );
+  z-index: 1;
+}
+
+.slider-container .slider-item img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover; /* kalau di dalam container fixed */
+}
+
+.slider-container .slider-item .slider-content {
+  position: absolute;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  z-index: 2;
+  top: 20px; /* Atau sesuai kebutuhan */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.slider-item .slider-content .slider-title {
+  font-size: 30px;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-top: 3rem;
+}
+
+.slider-item .slider-content .slider-description {
+  width: 50ch;
+}
+
+.slider-item .slider-content .slider-action {
+  color: black;
+  background-color: white;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
+  text-decoration: none;
+  letter-spacing: 3px;
+  width: fit-content;
+  position: relative;
+  isolation: isolate;
+  font-weight: 800;
+}
+
+.slider-content .slider-action::before {
+  content: "";
+  background-color: #b163f2;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 0;
+  transition: all 500ms;
+}
+
+.slider-content .slider-action:hover::before {
+  width: 100%;
+  color: #b163f2;
 }
 
 /* Vote Section */
@@ -243,7 +343,7 @@ body {
   flex-direction: column;
   gap: 1rem;
   margin: 1.5rem 0;
-  background-color: #e3f2fd; /* biru pastel */
+  background-color: #f3e8ff;
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -260,9 +360,9 @@ body {
 
 .filter-container label,
 .filter-item label {
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #1a237e;
+  color: #000;
 }
 
 .filter-container select {
@@ -272,7 +372,7 @@ body {
   font-size: 14px;
   background-color: #ffffff;
   box-sizing: border-box;
-  color: #0d47a1;
+  color: #000;
   width: 100%;
 }
 
@@ -284,7 +384,7 @@ body {
   font-size: 14px;
   background-color: #ffffff;
   box-sizing: border-box;
-  color: #0d47a1;
+  color: #000;
   appearance: none; /* hilangkan style default browser */
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='10'%20height='5'%3E%3Cpolygon%20points='0,0%205,5%2010,0'%20fill='%230d47a1'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -311,7 +411,7 @@ body {
 }
 
 .vote-button {
-  background-color: #64b5f6; /* biru pastel */
+  background-color: #bdb2ff; /* biru pastel */
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -324,12 +424,16 @@ body {
 }
 
 .vote-button:hover {
-  background-color: #42a5f5;
+  background-color: #b163f2;
   box-shadow: 0 6px 12px rgba(66, 165, 245, 0.5);
 }
 
+.mulai-voting {
+  font-family: "Poppins", sans-serif;
+}
+
 .btn-rekap {
-  background-color: #64b5f6;
+  background-color: #bdb2ff;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 9999px;
@@ -339,9 +443,14 @@ body {
 }
 
 .btn-rekap:hover {
-  background-color: #42a5f5;
+  background-color: #b163f2;
 }
 
 .kandidat-container {
   padding-bottom: 80px; /* agar tidak ketutup navbar bawah */
+}
+
+/* Rekap Section */
+#rekap-section {
+  margin-top: 80px;
 }

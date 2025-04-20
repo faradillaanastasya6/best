@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 
 class PegawaiModel extends Model
 {
-    protected $table = "pegawai";
+    protected $table = "employee";
     protected $primaryKey = "nip";
-    protected $allowedFields = ["nip", "nama", "tim", "username", "password"];
+    protected $allowedFields = ["nip", "name", "team", "username", "hash_password"];
     protected $returnType = "array";
 }

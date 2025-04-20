@@ -49,6 +49,7 @@ $event = $event ?? '';
 
   <!-- Home Section Start -->
   <section id="home-section">
+    <!-- hide
     <div class="penjelasan">
       Penilaian dilakukan secara objektif berdasarkan indikator yang telah ditentukan.
       Partisipasi Anda sangat dihargai untuk menciptakan lingkungan kerja yang inspiratif dan berintegritas.
@@ -56,26 +57,40 @@ $event = $event ?? '';
 
     <div class="carousel-container">
       <div class="carousel-wrapper" id="carouselWrapper">
-        <!-- Slide 1 -->
+        
         <div class="carousel-slide">
           <h3>Change Ambassador (CA)</h3>
           <p>Untuk pegawai yang mendorong perubahan positif</p>
         </div>
-        <!-- Slide 2 -->
+        
         <div class="carousel-slide">
           <h3>Employee of the Month (EOM)</h3>
           <p>Untuk kontribusi unggul dalam periode bulanan</p>
         </div>
-        <!-- Slide 3 -->
+        
         <div class="carousel-slide">
           <h3>Employee of the Year (EOY)</h3>
           <p>Untuk inspirasi luar biasa sepanjang tahun</p>
         </div>
       </div>
+      -->
 
-      <!-- Nav Buttons -->
-      <button class="carousel-btn left" id="prevBtn"><i data-feather="chevron-left"></i></button>
-      <button class="carousel-btn right" id="nextBtn"><i data-feather="chevron-right"></i></button>
+
+    <!-- delete soon -->
+    <div class="slider-container">
+      <div class="slider-item">
+        <img class="slider-image" src="/asset/slide1.jpg" alt="">
+        <div class="slider-content">
+          <h2 class="slider-title">Employee of The Month</h2>
+          <p class="slider-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores quod, sequi voluptas dolorem illum maiores eaque delectus alias voluptatem facere nesciunt veritatis. Iusto, omnis eius?</p>
+          <a class="slider-action" href="#">MASUK</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav Buttons -->
+    <button class="carousel-btn left" id="prevBtn"><i data-feather="chevron-left"></i></button>
+    <button class="carousel-btn right" id="nextBtn"><i data-feather="chevron-right"></i></button>
     </div>
   </section>
   <!-- Home Section End -->

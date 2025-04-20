@@ -16,20 +16,20 @@ class Login extends BaseController
         $model = new PegawaiModel();
 
         $username = $this->request->getPost('username');
-        $password = $this->request->getPost('password');
+        $password = $this->request->getPost('hash_password');
 
-        $pegawai = $model->where('username', $username)->first();
+        $employee = $model->where('username', $username)->first();
 
-        if ($pegawai) {
-            if (password_verify($password, $pegawai['password'])) {
-                // Set session jika login berhasil
+        if ($employee) {
+            // Jika password cocok
+            if ($password === $employee['password']) {  // Verifikasi password (plaintext)
                 $session->set([
-                    'nip'       => $pegawai['nip'],    // pakai nip karena itu primary key-nya
-                    'nama'      => $pegawai['nama'],
-                    'tim'       => $pegawai['tim'],
+                    'nip'       => $employee['nip'],
+                    'name'      => $employee['name'],
+                    'team'       => $employee['team'],
                     'logged_in' => true
                 ]);
-                return redirect()->to('/home'); // arahkan ke halaman home
+                return redirect()->to('/home');  // Redirect ke halaman home setelah login berhasil
             } else {
                 $session->setFlashdata('error', 'Password salah');
                 return redirect()->to('/login');
