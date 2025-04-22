@@ -15,6 +15,7 @@ class Login extends BaseController
         $session = session();
         $model = new PegawaiModel();
 
+
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('hash_password');
 
@@ -22,14 +23,14 @@ class Login extends BaseController
 
         if ($employee) {
             // Jika password cocok
-            if ($password === $employee['password']) {  // Verifikasi password (plaintext)
+            if ($password === $employee['hash_password']) {  // Verifikasi password (plaintext)
                 $session->set([
                     'nip'       => $employee['nip'],
                     'name'      => $employee['name'],
                     'team'       => $employee['team'],
                     'logged_in' => true
                 ]);
-                return redirect()->to('/home');  // Redirect ke halaman home setelah login berhasil
+                return redirect()->to('/voter');  // Redirect ke halaman home setelah login berhasil
             } else {
                 $session->setFlashdata('error', 'Password salah');
                 return redirect()->to('/login');

@@ -21,24 +21,25 @@
 </head>
 
 <body>
+    <?php if (session()->getFlashdata('error')) : ?>
+        <p style="color:red"><?= session()->getFlashdata('error') ?></p>
+    <?php endif; ?>
     <div class="login">
-        <form action="/login/auth" method="post">
+        <form action="<?= base_url('login/auth') ?>" method="post">
             <h1>Login</h1>
             <div class="input">
                 <input name="username" type="text" placeholder="Username" required>
                 <!-- <i data-feather="user"></i> -->
             </div>
             <div class="input">
-                <input name="password" type="password" placeholder="Password" required>
+                <input name="hash_password" type="password" placeholder="Password" required>
                 <!-- <i data-feather="lock"></i> -->
             </div>
             <div class="remember-forgot">
                 <label><input type="checkbox">Remember me</label>
                 <a href="#">Forgot password?</a>
             </div>
-            <a href="#">
-                <button type="submit" class="button">Login</button>
-            </a>
+            <button type="submit" class="button">Login</button>
         </form>
     </div>
 

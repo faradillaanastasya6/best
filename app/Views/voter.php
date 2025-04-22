@@ -139,22 +139,6 @@ $event = $event ?? '';
     </div>
   </section>
 
-
-  <!-- Vote Carousel -->
-  <section id="vote-carousel" style="display:none;">
-    <div id="kandidat-container"></div>
-    <div class="vote-navigation">
-      <button id="prevKandidat" style="display: none;">Sebelumnya</button>
-      <button id="nextKandidat">Selanjutnya</button>
-      <button id="submitVote" style="display: none;">Submit</button>
-    </div>
-    <div id="terima-kasih" style="display: none; text-align: center; margin-top: 2rem;">
-      <h3>Terima kasih sudah memberikan penilaian!</h3>
-      <p>Vote Anda sudah tercatat</p>
-    </div>
-  </section>
-  <!-- Vote Section End -->
-
   <!-- Rekap Section Start-->
   <section id="rekap-section" style="display:none;">
     <div class="rekap-section">
@@ -229,89 +213,6 @@ $event = $event ?? '';
 
   <script>
     // ===============================
-    // DATA KANDIDAT & PERTANYAAN
-    // ===============================
-    const kandidatData = [{
-        nama: "Andi Saputra",
-        jabatan: "Statistisi Ahli Pertama",
-        nilai: Array(21).fill(0)
-      },
-      {
-        nama: "Siti Aminah",
-        jabatan: "Pranata Komputer Ahli Muda",
-        nilai: Array(21).fill(0)
-      },
-      {
-        nama: "Dedi Pratama",
-        jabatan: "Statistisi Terampil",
-        nilai: Array(21).fill(0)
-      }
-    ];
-
-    const pertanyaan = Array.from({
-      length: 21
-    }, (_, i) => `Pertanyaan ${i + 1}`);
-    const kandidatContainer = document.getElementById("kandidat-container");
-
-    // ===============================
-    // GENERATE KANDIDAT DAN PERTANYAAN
-    // ===============================
-
-    kandidatData.forEach((kandidat, index) => {
-      const kandidatElement = document.createElement("div");
-      kandidatElement.classList.add("kandidat");
-      kandidatElement.dataset.index = index;
-      kandidatElement.style.display = "none";
-
-      kandidatElement.innerHTML = `
-       <div class="card">
-    <h3>${kandidat.nama}</h3>
-    <p>${kandidat.jabatan}</p>
-    <div class="pertanyaan-container">
-      ${pertanyaan.map((q, i) => `
-        <div class="pertanyaan-item">
-          <p>${q}</p>
-          <div class="rating" data-index="${index}" data-question="${i}">
-            ${[1, 2, 3, 4, 5].map(j => `
-              <i class="star" data-value="${j}">&#9733;</i>
-            `).join('')}
-          </div>
-        </div>
-      `).join('')}
-      </div>
-    <button class="lanjut-kandidat btn-lanjut">Lanjut</button>
-  </div>
-    </div>
-  </div>
-`;
-
-      kandidatContainer.appendChild(kandidatElement);
-    });
-
-
-    // ===============================
-    // FUNGSI SET RATING BINTANG
-    // ===============================
-    kandidatContainer.addEventListener("click", function(e) {
-      if (e.target.classList.contains("star")) {
-        const star = e.target;
-        const ratingValue = parseInt(star.dataset.value);
-        const ratingDiv = star.parentElement;
-        const kandidatIndex = parseInt(ratingDiv.dataset.index);
-        const questionIndex = parseInt(ratingDiv.dataset.question);
-
-        // Simpan nilai
-        kandidatData[kandidatIndex].nilai[questionIndex] = ratingValue;
-
-        // Update tampilan bintang
-        const allStars = ratingDiv.querySelectorAll(".star");
-        allStars.forEach((s, i) => {
-          s.classList.toggle("selected", i < ratingValue);
-        });
-      }
-    });
-
-    // ===============================
     // MENU USER (HAMBURGER TOGGLE)
     // ===============================
     const hamburgerBtn = document.getElementById("hamburgerBtn");
@@ -364,158 +265,20 @@ $event = $event ?? '';
     }
 
     // ===============================
-    // CAROUSEL KANDIDAT (VOTING)
+    // HALAMAN VOTE
     // ===============================
-    let currentIndex = 0;
-    const kandidatList = document.querySelectorAll(".kandidat");
-    const prevButton = document.getElementById("prevKandidat");
-    const nextButton = document.getElementById("nextKandidat");
-    const submitButton = document.getElementById("submitVote");
-    const startButton = document.getElementById("mulai-voting");
+    document.getElementById('mulai-voting').addEventListener('click', function() {
+      const tahun = document.getElementById('tahun').value;
+      const bulan = document.getElementById('bulan').value;
+      const event = document.getElementById('event').value;
 
-    startButton.addEventListener("click", () => {
-      // Sembunyikan filter dan tombol mulai
-      document.querySelector(".filter-container").style.display = "none";
-      startButton.style.display = "none";
-
-      // Tampilkan voting
-      document.getElementById("vote-carousel").style.display = "block";
-
-      // Set kandidat pertama
-      currentIndex = 0;
-      updateNavigationButtons();
-    });
-
-    function updateNavigationButtons() {
-      kandidatList.forEach((el, i) => {
-        el.style.display = i === currentIndex ? "block" : "none";
-      });
-
-      prevButton.style.display = currentIndex > 0 ? "inline-block" : "none";
-      nextButton.style.display = currentIndex < kandidatList.length - 1 ? "inline-block" : "none";
-
-      document.getElementById("submitVote").style.display =
-        currentIndex === kandidatList.length - 1 ? "block" : "none";
-    }
-
-    nextButton.addEventListener("click", () => {
-      if (currentIndex < kandidatList.length - 1) {
-        currentIndex++;
-        updateNavigationButtons();
-      }
-    });
-
-    prevButton.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateNavigationButtons();
-      }
-    });
-
-    // Tombol "Lanjut" dalam Card Kandidat
-    kandidatContainer.addEventListener("click", function(e) {
-      if (e.target.classList.contains("lanjut-kandidat")) {
-        if (currentIndex < kandidatList.length - 1) {
-          currentIndex++;
-          updateNavigationButtons();
-        } else {
-          // Sembunyikan tombol lanjut saat sudah di kandidat terakhir dan munculkan tombol submit
-          document.getElementById("submitVote").style.display = "block";
-        }
-      }
-    });
-
-    // ===============================
-    // HANDLER UNTUK TOMBOL SUBMIT
-    // ===============================
-    submitButton.addEventListener("click", function() {
-      // Cek apakah semua kandidat sudah dinilai
-      let isValid = true;
-
-      kandidatData.forEach(kandidat => {
-        // Periksa apakah ada pertanyaan yang belum dinilai
-        if (kandidat.nilai.includes(0)) {
-          isValid = false;
-        }
-      });
-
-      if (!isValid) {
-        // Tampilkan peringatan jika ada yang belum dinilai
-        alert("Semua pertanyaan harus dinilai sebelum submit.");
-        return; // Hentikan proses jika ada yang belum dinilai
+      if (!tahun || !bulan || !event) {
+        alert("Lengkapi filter terlebih dahulu!");
+        return;
       }
 
-      // Jika semua sudah dinilai, lanjutkan ke proses submit
-      let allVotes = [];
-      kandidatData.forEach((kandidat, index) => {
-        allVotes.push({
-          nama: kandidat.nama,
-          nilai: kandidat.nilai
-        });
-      });
-
-      // Tampilkan nilai di console (atau kirim ke server)
-      console.log("Votes:", allVotes);
-
-      // Kirim data ke server
-      fetch("<?= base_url('voter/simpan') ?>", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(allVotes)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("Server response:", data);
-          alert("Voting berhasil disimpan!");
-
-          // Reset voting setelah berhasil
-          kandidatData.forEach(kandidat => kandidat.nilai = Array(21).fill(0));
-
-          document.getElementById("terima-kasih").style.display = "block";
-          document.getElementById("vote-section").style.display = "none";
-        })
-        .catch(error => {
-          console.error("Gagal mengirim voting:", error);
-          alert("Terjadi kesalahan saat menyimpan voting.");
-        });
-
-      // Tampilkan pesan terima kasih
-      alert("Terima kasih, voting Anda sudah tercatat!");
-
-      // Reset voting atau lakukan tindakan lain
-      kandidatData.forEach(kandidat => kandidat.nilai = Array(21).fill(0)); // Reset nilai
-
-      // Mungkin ganti tampilan untuk menampilkan pesan selesai
-      document.getElementById("terima-kasih").style.display = "block";
-      document.getElementById("vote-section").style.display = "none";
-    });
-
-    // ===============================
-    // AUTO MULAI VOTING JIKA ADA PARAMETER
-    // ===============================
-    document.addEventListener("DOMContentLoaded", () => {
-      showSlide(currentSlide);
-      showSection('home-section');
-
-      const tahun = "<?= $tahun ?>";
-      const bulan = "<?= $bulan ?>";
-      const event = "<?= $event ?>";
-
-      if (tahun && bulan && event) {
-        showSection('vote-section');
-        document.querySelector(".filter-container").style.display = "none";
-        document.getElementById("mulai-voting").style.display = "none";
-        document.getElementById("vote-carousel").style.display = "block";
-
-        if (kandidatList.length > 0) {
-          kandidatList.forEach((k, i) => k.style.display = "none");
-          kandidatList[0].style.display = "block";
-          currentIndex = 0;
-          updateNavigationButtons();
-        }
-      }
+      const path = `/voter/${tahun}_${bulan}_${event}`;
+      window.location.href = path;
     });
   </script>
 
