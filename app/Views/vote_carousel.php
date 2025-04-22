@@ -64,59 +64,117 @@
         "Apakah kandidat memiliki kreativitas dalam bekerja?",
         "Apakah kandidat bisa menjadi role model bagi rekan kerja?"
     ];
-    const kandidatData = <?= json_encode($kandidatData ?? []); ?>;
-    const kandidatWrapper = document.getElementById("kandidat-wrapper");
 
+    const kandidatData = <?= json_encode($kandidatData ?? []); ?>;
+    const kandidatContainer = document.getElementById("kandidat-container");
+
+    // Pastikan ada nilai untuk kandidat
+    kandidatData.forEach(k => {
+        if (!k.nilai) k.nilai = Array(pertanyaan.length).fill(null);
+    });
+
+    // Buat elemen untuk setiap kandidat
     kandidatData.forEach((kandidat, index) => {
         const kandidatElement = document.createElement("div");
         kandidatElement.classList.add("kandidat");
         kandidatElement.dataset.index = index;
-        kandidatElement.style.display = "none"; // Semua kandidat disembunyikan di awal
+        kandidatElement.style.display = "none"; // Awalnya disembunyikan
 
         kandidatElement.innerHTML = `
-       <div class="card">
-           <h3>${kandidat.nama}</h3>
-           <p>${kandidat.jabatan}</p>
-           <div class="pertanyaan-container">
-               ${pertanyaan.map((q, i) => `
-                   <div class="pertanyaan-item">
-                       <p>${q}</p>
-                       <div class="rating" data-index="${index}" data-question="${i}">
-                           ${[1, 2, 3, 4, 5].map(j => `
-                               <label>
-                                   <input type="radio" name="rating-${index}-${i}" value="${j}" class="rating-radio" data-value="${j}">
-                                   ${j}
-                               </label>
-                           `).join('')}
-                       </div>
-                   </div>
-               `).join('')}
-           </div>
-           <button class="lanjut-kandidat btn-lanjut">Lanjut</button>
-       </div>
-    `;
+            <div class="card">
+                <h3>${kandidat.nama}</h3>
+                <p>${kandidat.jabatan}</p>
+                <div class="pertanyaan-container">
+                    ${pertanyaan.map((q, i) => `
+                        <div class="pertanyaan-item">
+                            <p>${q}</p>
+                            <div class="rating" data-index="${index}" data-question="${i}">
+                                ${[1, 2, 3, 4, 5].map(j => `
+                                    <label>
+                                        <input type="radio" name="rating-${index}-${i}" value="${j}" class="rating-radio" data-value="${j}">
+                                        ${j}
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="lanjut-kandidat btn-lanjut">Lanjut</button>
+            </div>
+        `;
 
-        kandidatWrapper.appendChild(kandidatElement);
+        kandidatContainer.appendChild(kandidatElement);
     });
 
-    kandidatContainer.addEventListener("change", function(e) {
-        if (e.target.classList.contains("rating-radio")) {
-            const radio = e.target;
-            const ratingValue = parseInt(radio.value);
-            const ratingDiv = radio.closest(".rating");
-            const kandidatIndex = parseInt(ratingDiv.dataset.index);
-            const questionIndex = parseInt(ratingDiv.dataset.question);
+    // Tombol Mulai Voting
+    document.getElementById("mulai-voting").addEventListener("click", function() {
+        // Sembunyikan bagian voting awal, tampilkan carousel voting
+        document.getElementById("vote-section").style.display = "none";
+        document.getElementById("vote-carousel").style.display = "block";
 
-            // Simpan nilai
-            kandidatData[kandidatIndex].nilai[questionIndex] = ratingValue;
+        // Tampilkan kandidat pertama
+        const kandidatList = document.querySelectorAll(".kandidat");
+        if (kandidatList.length > 0) {
+            kandidatList[0].style.display = "block";
+        }
 
-            // Tambahkan class untuk menandai bahwa rating telah dipilih
-            radio.parentElement.querySelectorAll("label").forEach((label) => {
-                label.classList.toggle("selected", parseInt(label.querySelector("input").value) <= ratingValue);
-            });
+        // Atur navigasi
+        document.getElementById("prevKandidat").style.display = "none";
+        document.getElementById("nextKandidat").style.display = "inline-block";
+        document.getElementById("submitVote").style.display = "none";
+    });
+
+    // Navigasi kandidat
+    let currentKandidatIndex = 0;
+    const kandidatList = document.querySelectorAll(".kandidat");
+
+    // Tombol Lanjut
+    document.querySelectorAll(".lanjut-kandidat").forEach((button, index) => {
+        button.addEventListener("click", function() {
+            if (index < kandidatList.length - 1) {
+                kandidatList[index].style.display = "none";
+                kandidatList[index + 1].style.display = "block";
+                currentKandidatIndex = index + 1;
+
+                // Cek apakah sudah di kandidat terakhir
+                if (currentKandidatIndex === kandidatList.length - 1) {
+                    document.getElementById("nextKandidat").style.display = "none";
+                    document.getElementById("submitVote").style.display = "inline-block";
+                }
+
+                document.getElementById("prevKandidat").style.display = "inline-block";
+            }
+        });
+    });
+
+    // Tombol Sebelumnya
+    document.getElementById("prevKandidat").addEventListener("click", function() {
+        if (currentKandidatIndex > 0) {
+            kandidatList[currentKandidatIndex].style.display = "none";
+            currentKandidatIndex--;
+            kandidatList[currentKandidatIndex].style.display = "block";
+
+            // Cek jika tombol submit perlu disembunyikan
+            if (currentKandidatIndex < kandidatList.length - 1) {
+                document.getElementById("nextKandidat").style.display = "inline-block";
+                document.getElementById("submitVote").style.display = "none";
+            }
+        }
+
+        if (currentKandidatIndex === 0) {
+            document.getElementById("prevKandidat").style.display = "none";
         }
     });
+
+    // Submit Vote
+    document.getElementById("submitVote").addEventListener("click", function() {
+        // Tampilkan pesan terima kasih
+        document.getElementById("vote-carousel").style.display = "none";
+        document.getElementById("terima-kasih").style.display = "block";
+    });
 </script>
+
+
 
 <!-- Feather Icon -->
 <script>

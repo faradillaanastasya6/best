@@ -1,41 +1,30 @@
 <?php
 
-// app/Controllers/Voter.php
 namespace App\Controllers;
+
+use App\Models\EventModel;
+use App\Models\KandidatModel;
 
 class Voter extends BaseController
 {
     public function index()
     {
-        return view('voter');
+        // Ambil event pertama dari database
+        $eventModel = new EventModel();
+        $event = $eventModel->asArray()->first();
+        return view('voter', ['event' => $event]);
     }
-    public function vote($filter)
+
+    public function vote($eventId)
     {
-        // Pisahkan filter menjadi tahun, bulan, dan event
-        [$tahun, $bulan, $event] = explode('_', $filter);
+        // Ambil data kandidat berdasarkan eventId
+        $kandidatModel = new KandidatModel(); // Asumsikan ada model Kandidat untuk mengambil data kandidat
+        $kandidatData = $kandidatModel->where('id_event', $eventId)->findAll(); // Mengambil kandidat berdasarkan eventId
 
-        // Siapkan data kandidat secara manual (tanpa akses database)
-        $kandidatData = [
-            [
-                'nama' => 'Kandidat A',
-                'jabatan' => 'Manager',
-            ],
-            [
-                'nama' => 'Kandidat B',
-                'jabatan' => 'Supervisor',
-            ],
-            [
-                'nama' => 'Kandidat C',
-                'jabatan' => 'Staff',
-            ]
-        ];
-
-        // Kirim data ke view
+        // Kirim ke view vote_carousel
         return view('vote_carousel', [
             'kandidatData' => $kandidatData,
-            'tahun' => $tahun,
-            'bulan' => $bulan,
-            'event' => $event
+            'eventId' => $eventId
         ]);
     }
 }

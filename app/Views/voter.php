@@ -98,44 +98,18 @@ $event = $event ?? '';
   <!-- Vote Section Start -->
   <!-- Filter Pemilihan -->
   <section id="vote-section" style="display: none;">
-    <div class="filter-container" id="vote-filter">
-      <div class="filter-item">
-        <label for="tahun">Tahun:</label>
-        <select id="tahun" name="tahun">
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-        </select>
+    <div class="vote-container">
+      <div class="event-info">
+        <h2><?= $event['name'] ?></h2>
+        <p class="event-dates">
+          <span><?= date('d F Y H:i:s', strtotime($event['start_date'])) ?></span><br>
+          <span>sampai dengan</span><br>
+          <span><?= date('d F Y H:i:s', strtotime($event['end_date'])) ?></span>
+        </p>
       </div>
-
-      <div class="filter-item">
-        <label for="bulan">Bulan:</label>
-        <select id="bulan" name="bulan">
-          <option value="januari">Januari</option>
-          <option value="februari">Februari</option>
-          <option value="maret">Maret</option>
-          <option value="april">April</option>
-          <option value="mei">Mei</option>
-          <option value="juni">Juni</option>
-          <option value="juli">Juli</option>
-          <option value="agustus">Agustus</option>
-          <option value="september">September</option>
-          <option value="oktober">Oktober</option>
-          <option value="november">November</option>
-          <option value="desember">Desember</option>
-        </select>
+      <div class="vote-button-container">
+        <button id="mulai-voting" class="vote-button">Mulai Voting</button>
       </div>
-
-      <div class="filter-item">
-        <label for="event">Event:</label>
-        <select id="event" name="event">
-          <option value="eoy">Employee Of The Year</option>
-          <option value="eom">Employee Of The Month</option>
-          <option value="ca">Change Ambassador</option>
-        </select>
-      </div>
-    </div>
-    <div class="vote-button-container">
-      <button id="mulai-voting" class="vote-button">Mulai Voting</button>
     </div>
   </section>
 
@@ -210,6 +184,7 @@ $event = $event ?? '';
       <i class="bi bi-bar-chart-fill"></i> Rekap
     </a>
   </div>
+  <pre>
 
   <script>
     // ===============================
@@ -268,17 +243,8 @@ $event = $event ?? '';
     // HALAMAN VOTE
     // ===============================
     document.getElementById('mulai-voting').addEventListener('click', function() {
-      const tahun = document.getElementById('tahun').value;
-      const bulan = document.getElementById('bulan').value;
-      const event = document.getElementById('event').value;
-
-      if (!tahun || !bulan || !event) {
-        alert("Lengkapi filter terlebih dahulu!");
-        return;
-      }
-
-      const path = `/voter/${tahun}_${bulan}_${event}`;
-      window.location.href = path;
+      let eventId = "<?= $event['id_event']; ?>";
+      window.location.href = `/voter/${eventId}`;
     });
   </script>
 

@@ -23,7 +23,7 @@ class RekapController extends BaseController
         ])->first();
 
         $hari_ini = date('Y-m-d');
-        $status = 'berlangsung';
+        $status = 'berlangsung'; //tinggal ubah periode votingnya masih berlangsung atau udah *selesai*
         $hasil = [];
         $voters = [];
 

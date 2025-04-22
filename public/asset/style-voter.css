@@ -407,7 +407,7 @@ body {
 .vote-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .vote-button {
@@ -415,10 +415,11 @@ body {
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 9999px; /* biar rounded pill gitu */
+  border-radius: 9999px; /* pill shape */
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
+  font-family: "Poppins", sans-serif;
   box-shadow: 0 4px 10px rgba(100, 181, 246, 0.4);
   transition: all 0.3s ease;
 }
@@ -448,6 +449,109 @@ body {
 
 .kandidat-container {
   padding-bottom: 80px; /* agar tidak ketutup navbar bawah */
+}
+
+/* vote hanya tampilkan nama dan start date & end date*/
+.vote-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.event-info {
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  margin-top: 3rem;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #333;
+}
+
+.container {
+  position: relative;
+  max-width: 700px;
+  width: 100%;
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgb(0, 0, 0, 0.1);
+}
+
+.container header {
+  font-size: 1.5rem;
+  color: black;
+  font-weight: 400;
+  text-align: center;
+}
+
+.container form {
+  margin-top: 30px;
+}
+
+.container form .input-box {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.form :where(.input-box input) {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0 15px;
+}
+
+.input-box input :focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form .tombol {
+  display: flex;
+  margin-top: 20px;
+}
+
+.form button {
+  height: 55px;
+  width: 100%;
+  color: white;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25 ease;
+  background-color: #5a3683;
+  margin: 10px;
+}
+
+.form button:hover {
+  background-color: black;
 }
 
 /* Rekap Section */
