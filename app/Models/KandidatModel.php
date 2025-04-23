@@ -14,4 +14,17 @@ class KandidatModel extends Model
     {
         return $this->where('id_event', $eventId)->findAll();
     }
+
+    public function getAllCandidatesByEvent($eventId)
+    {
+        $script = "
+            SELECT c.*, e.name
+            FROM candidate c
+            INNER JOIN employee e
+            ON e.nip = c.nip
+            WHERE id_event=$eventId
+        ";
+        $data = $this->db->query($script)->getResultArray();
+        return $data;
+    }
 }

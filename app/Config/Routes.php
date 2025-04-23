@@ -13,6 +13,7 @@ $routes->post('/pegawai/edit/(:any)', 'Pegawai::update/$1');
 $routes->get('/pegawai/delete/(:any)', 'Pegawai::delete/$1');
 $routes->get('/voter', 'Voter::index');
 $routes->get('/voter/(:any)', 'Voter::vote/$1'); //untuk vote_carousel dengan parameter
+$routes->post('/voter/poll', 'Voter::voteAction');
 $routes->post('voter/simpan', 'VoteSimpan::simpan');
 $routes->get('rekap', 'RekapController::index');
 $routes->get('/login', 'Login::index');

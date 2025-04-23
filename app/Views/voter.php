@@ -41,9 +41,9 @@ $event = $event ?? '';
     </div>
     <div id="hamburgerBtn"><i data-feather="menu"></i></div>
     <div class="user-menu" id="userMenu">
-      <div><strong>Nama User</strong></div>
-      <div>NIP</div>
-      <a href="#">Log Out</a>
+      <div><strong><?= session('name'); ?></strong></div>
+      <div><?= session('nip'); ?></div>
+      <a href="/logout">Logout</a>
     </div>
   </div>
 
@@ -79,11 +79,9 @@ $event = $event ?? '';
     <!-- delete soon -->
     <div class="slider-container">
       <div class="slider-item">
-        <img class="slider-image" src="/asset/slide1.jpg" alt="">
         <div class="slider-content">
           <h2 class="slider-title">Employee of The Month</h2>
-          <p class="slider-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores quod, sequi voluptas dolorem illum maiores eaque delectus alias voluptatem facere nesciunt veritatis. Iusto, omnis eius?</p>
-          <a class="slider-action" href="#">MASUK</a>
+          <p class="quote">~ Karena setiap apresiasi berarti ~</p>
         </div>
       </div>
     </div>
