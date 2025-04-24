@@ -105,6 +105,10 @@
     let currentKandidatIndex = 0;
     const kandidatList = document.querySelectorAll(".kandidat");
 
+    if (currentKandidatIndex !== kandidatList.length - 1) {
+        document.querySelector("#submitVote").style.display = 'none';
+    }
+
 
     // Tombol Lanjut
     document.getElementById("nextKandidat").addEventListener("click", function() {
@@ -157,8 +161,8 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(kandidatData)
-        }).finally(() => {
-            window.replace('<?= base_url('/voter') ?>')
+        }).catch(e => console.log(e)).finally(() => {
+            window.location.replace('<?= base_url('/voter') ?>')
         })
     });
 </script>

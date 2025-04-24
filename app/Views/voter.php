@@ -153,13 +153,15 @@ $event = $event ?? '';
             <tr>
               <th>Nama Voter</th>
               <th>NIP</th>
+              <th>Tanggal Pilih</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($voters as $v): ?>
+            <?php foreach ($employee as $e): ?>
               <tr>
-                <td><?= $v['nama'] ?></td>
-                <td><?= $v['nip'] ?></td>
+                <td><?= $e['name'] ?></td>
+                <td><?= $e['nip'] ?></td>
+                <td><?= $e['created_at'] ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>

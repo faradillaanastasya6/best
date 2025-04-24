@@ -6,6 +6,7 @@ use App\Models\EventModel;
 use App\Models\KandidatModel;
 use App\Models\QuestionModel;
 use App\Models\PollModel;
+use App\Models\ScoreModel;
 
 class Voter extends BaseController
 {
@@ -14,9 +15,16 @@ class Voter extends BaseController
     {
         // Ambil event pertama dari database
         $eventModel = new EventModel();
+        $pollModel = new PollModel();
+
         $event = $eventModel->asArray()->first();
-        return view('voter', ['event' => $event]);
+        $employee = $pollModel->getEmployeeVoted($event['id_event']);
+        return view('voter', [
+            'event' => $event,
+            'employee' => $employee
+        ]);
     }
+
 
     public function vote($eventId)
     {
@@ -42,19 +50,34 @@ class Voter extends BaseController
         $payload = json_decode($json_data, true); // Decode to associative array
 
         $pollModel = new PollModel();
+        $scoreModel = new ScoreModel();
+
+        $data = [];
+        // echo $payload;
+        // error_log(print_r($session->get('nip'), true));
+        foreach ($payload as $row) {
+            $new_data = [
+                'nip' => $session->get('nip'),
+                'id_candidate' => $row['id_candidate'],
+                'id_event' => $row['id_event'],
+            ];
+            array_push($data, $new_data);
+        }
+
+        $pollModel->insertBatch($data);
 
         $data = [];
         foreach ($payload as $row) {
-            foreach ($row['nilai'] as $question) {
+            $poll = $pollModel->where('id_candidate', $row['id_candidate'])->where('nip', $session->get('nip'))->findAll()[0];
+            foreach ($row['nilai'] as $score) {
                 $new_data = [
-                    'nip' => $session->userdata['nip'],
-                    'id_candidate' => $row['id_candidate'],
-                    'id_question' => $question['id_question'],
-                    'score' => $question['score']
+                    'id_poll' => $poll['id_poll'],
+                    'id_question' => $score['id_question'],
+                    'score' => $score['score']
                 ];
                 array_push($data, $new_data);
             }
         }
-        $pollModel->insertBatch($data);
+        $scoreModel->insertBatch($data);
     }
 }

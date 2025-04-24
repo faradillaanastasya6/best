@@ -24,12 +24,18 @@ class Login extends BaseController
         if ($employee) {
             // Jika password cocok
             if ($password === $employee['hash_password']) {  // Verifikasi password (plaintext)
+
+                // $_SESSION['nip'] = $employee['nip'];
+                // $_SESSION['name'] = $employee['name'];
+                // $_SESSION['team'] = $employee['team'];
+                // $_SESSION['logged_in'] = true;
                 $session->set([
                     'nip'       => $employee['nip'],
                     'name'      => $employee['name'],
                     'team'       => $employee['team'],
                     'logged_in' => true
                 ]);
+                // error_log(print_r($_SESSION, true));
                 return redirect()->to('/voter');  // Redirect ke halaman home setelah login berhasil
             } else {
                 $session->setFlashdata('error', 'Password salah');
