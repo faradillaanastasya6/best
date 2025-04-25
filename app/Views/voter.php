@@ -1,10 +1,14 @@
 <?php
-$status = $status ?? 'berlangsung';
-$hasil = $hasil ?? [];
-$voters = $voters ?? [];
-$tahun = $tahun ?? '';
-$bulan = $bulan ?? '';
-$event = $event ?? '';
+$now = new DateTime();
+$start = new DateTime($event['start_date']);
+$end = new DateTime($event['end_date']);
+$status = $start <= $now && $now <= $end ? 'berlangsung' : 'selesai';
+
+// $hasil = $hasil ?? [];
+// $voters = $voters ?? [];
+// $tahun = $tahun ?? '';
+// $bulan = $bulan ?? '';
+// $event = $event ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -105,9 +109,11 @@ $event = $event ?? '';
           <span><?= date('d F Y H:i:s', strtotime($event['end_date'])) ?></span>
         </p>
       </div>
-      <div class="vote-button-container">
-        <button id="mulai-voting" class="vote-button">Mulai Voting</button>
-      </div>
+      <?php if (!$has_voted): ?>
+        <div class="vote-button-container">
+          <button id="mulai-voting" class="vote-button">Mulai Voting</button>
+        </div>
+      <?php endif; ?>
     </div>
   </section>
 
@@ -128,21 +134,15 @@ $event = $event ?? '';
         <table border="1" cellpadding="8" cellspacing="0">
           <thead>
             <tr>
-              <th>Nama Kandidat</th>
-              <th>Jabatan</th>
-              <th>Total Nilai</th>
-              <th>Rata-rata</th>
+              <th>Nama</th>
+              <th>NIP</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($hasil as $row): ?>
-              <tr>
-                <td><?= $row['nama'] ?></td>
-                <td><?= $row['jabatan'] ?></td>
-                <td><?= array_sum($row['nilai']) ?></td>
-                <td><?= round(array_sum($row['nilai']) / count($row['nilai']), 2) ?></td>
-              </tr>
-            <?php endforeach; ?>
+            <tr>
+              <td><?= $candidates[0]['name'] ?></td>
+              <td><?= $candidates[0]['nip'] ?></td>
+            </tr>
           </tbody>
         </table>
 

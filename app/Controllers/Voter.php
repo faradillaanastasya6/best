@@ -11,30 +11,46 @@ use App\Models\ScoreModel;
 class Voter extends BaseController
 {
 
+
+
     public function index()
     {
+        $session = session();
+        if (!$session->get('logged_in')) {
+            return redirect()->to('/login');
+        }
         // Ambil event pertama dari database
         $eventModel = new EventModel();
         $pollModel = new PollModel();
 
         $event = $eventModel->asArray()->first();
         $employee = $pollModel->getEmployeeVoted($event['id_event']);
+        $candidates = $pollModel->getCandidatesScore($event['id_event']);
+        $has_voted = count($pollModel->has_voted($session->get('nip'), $event['id_event'])) != 0;
         return view('voter', [
             'event' => $event,
-            'employee' => $employee
+            'employee' => $employee,
+            'candidates' => $candidates,
+            'has_voted' => $has_voted
         ]);
     }
 
 
     public function vote($eventId)
     {
+        $session = session();
+        if (!$session->get('logged_in')) {
+            return redirect()->to('/login');
+        }
         // $this->db->select();
         // Ambil data kandidat berdasarkan eventId
         $kandidatModel = new KandidatModel(); // Asumsikan ada model Kandidat untuk mengambil data kandidat
         $questionModel = new QuestionModel();
+
         // $kandidatData = $kandidatModel->where('id_event', $eventId)->findAll(); // Mengambil kandidat berdasarkan eventId
         $kandidatData = $kandidatModel->getAllCandidatesByEvent($eventId);
         $questionsData = $questionModel->findAll();
+
         // Kirim ke view vote_carousel
         return view('vote_carousel', [
             'kandidatData' => $kandidatData,
@@ -46,6 +62,9 @@ class Voter extends BaseController
     public function voteAction()
     {
         $session = session();
+        if (!$session->get('logged_in')) {
+            return redirect()->to('/login');
+        }
         $json_data = file_get_contents('php://input'); // Get the raw request body
         $payload = json_decode($json_data, true); // Decode to associative array
 

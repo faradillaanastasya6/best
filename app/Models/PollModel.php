@@ -28,7 +28,8 @@ class PollModel extends Model
     public function getCandidatesScore($idEvent)
     {
         $script = "
-            SELECT p.id_poll, c.id_candidate, c.nip, e.name, s.id_question, s.score, q.category
+        with mean_score as (
+            SELECT c.nip, AVG(s.score) mean_category, qc.id_category
             FROM candidate c
             INNER JOIN employee e
             ON c.nip=e.nip
@@ -38,13 +39,38 @@ class PollModel extends Model
             ON s.id_poll = p.id_poll
             INNER JOIN question q
             ON q.id_question = s.id_question
-            WHERE p.id_event=$idEvent
+            inner join question_category qc
+            on qc.id_category = q.id_category
+            where p.id_event=$idEvent
+            group by nip, id_category
+        ),
+        final_score as (
+            select ms.nip, sum(weight*mean_category) score
+            from mean_score ms
+            inner join question_category  qc
+            on qc.id_category = ms.id_category
+            group by nip
+            order by score desc
+        )
+        select fs.*, e.name
+        from final_score fs
+        inner join employee e 
+        on fs.nip = e.nip
         ";
-        $scoreCategoryMapping = [
-            "Berorientasi Pelayanan" => 0.145,
-            "Akuntabel" => 0.15
-        ];
+
         $data = $this->db->query($script)->getResultArray();
-        // return $data;
+        // error_log(print_r($data, true));
+        return $data;
+    }
+
+    public function has_voted($nip, $idEvent)
+    {
+        $script = "
+            select *
+            from poll
+            where nip=$nip and id_event=$idEvent
+        ";
+        $data = $this->db->query($script)->getResultArray();
+        return $data;
     }
 }

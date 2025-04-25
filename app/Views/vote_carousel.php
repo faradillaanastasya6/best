@@ -86,7 +86,7 @@
                             <div class="rating" data-index="${index}" data-question="${i}">
                                 ${[1, 2, 3, 4, 5].map(j => `
                                     <label>
-                                        <input type="radio" name="rating-${index}-${i}" value="${j}" class="rating-radio" data-value="${j}" data-employee-index="${index}" data-question-index="${i}" onChange="handleChangeRating(this)" checked="checked">
+                                        <input type="radio" name="rating-${index}-${i}" value="${j}" class="rating-radio" data-value="${j}" data-employee-index="${index}" data-question-index="${i}" onChange="handleChangeRating(this)">
                                         ${j}
                                     </label>
                                 `).join('')}
